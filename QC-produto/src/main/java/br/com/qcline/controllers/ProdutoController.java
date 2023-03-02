@@ -1,11 +1,10 @@
 package br.com.qcline.controllers;
 
-import br.com.qcline.ProdutoService.ProdutoService;
+import br.com.qcline.service.ProdutoService;
 import br.com.qcline.dto.ProdutoDto;
 import br.com.qcline.models.ProdutoModel;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,7 +45,7 @@ public class ProdutoController {
     public ResponseEntity<Object> getProduto(@PathVariable(value = "id") UUID id) {
         Optional<ProdutoModel> produtoModelOptional = produtoService.findById(id);
         if (!produtoModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(produtoModelOptional.get());
     }
@@ -56,10 +54,10 @@ public class ProdutoController {
     public ResponseEntity<Object> deleteProduto(@PathVariable(value = "id") UUID id) {
         Optional<ProdutoModel> produtoModelOptional = produtoService.findById(id);
         if (!produtoModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
         }
         produtoService.delete(produtoModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Parking Spot deleted successfully.");
+        return ResponseEntity.status(HttpStatus.OK).body("Produto deletedo sucesso.");
     }
 
     @PutMapping("/{id}")
@@ -67,7 +65,7 @@ public class ProdutoController {
                                                 @RequestBody @Valid ProdutoDto produtoDto) {
         Optional<ProdutoModel> produtoModelOptional = produtoService.findById(id);
         if (!produtoModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
         }
         var produtoModel = new ProdutoModel();
         BeanUtils.copyProperties(produtoDto, produtoModel);

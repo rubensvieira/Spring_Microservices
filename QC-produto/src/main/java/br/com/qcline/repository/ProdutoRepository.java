@@ -10,8 +10,5 @@ import java.util.UUID;
 @Repository
 public interface ProdutoRepository extends JpaRepository<ProdutoModel, UUID> {
 
-    boolean existsByNome(String  nome);
-    boolean existsByQuantidade(BigDecimal quantidade);
-    boolean existsByValor(BigDecimal valor);
 
 }
