@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: QC-produto
-  cloud:
-    config:
-      uri: http://localhost:9090
-
